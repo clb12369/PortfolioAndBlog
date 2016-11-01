@@ -1,0 +1,14 @@
+@model BlogRepo
+
+<h1>Recent Posts</h1>
+
+<p><a href="/blog/new">Create new post</a>?</p>
+
+<hr>
+<div class="grid grid-2-400, grid-3-600 grid-4-800">
+    @foreach (var post in @Model.readLastFive()){
+        @Html.Partial("ReadOne", post)
+    }
+</div>
+
+

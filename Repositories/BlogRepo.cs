@@ -1,20 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
-public interface IBlog {
-    // void create(IEnumerable<Post> post);
-    Post read(int BlogId);
-    IEnumerable<Post> readAll();
-    // Post readLastFive(IEnumerable<Post> posts);
-    // IEnumerable<Post> readLastFive();
-    // Post update(int BlogId, Post post);
-    // void delete(int BlogId);
+public interface IBlogRepo {
+    void Add(Post p);
+    Post Read(int id);
+    IEnumerable<Post> readLastFive();
+    void Delete(int id);
+    void Create(Post p);
+    Post Update(Post p, int id);
 }
 
-public class Blog : IBlog {
-    int BlogId { get; set; } = 1;
-    string Title { get; set; } = "My Misadventures";
+public class BlogRepo : IBlogRepo {
+    public int BlogId { get; set; } = 1;
+    public string Title { get; set; } = "My Misadventures";
     public List<Post> posts = new List<Post>();
 
     // public Blog(int BlogId, string Title){
@@ -25,10 +25,10 @@ public class Blog : IBlog {
 
 
     // default constructor that adds 10 posts to the IEnumerable<Post> posts
-    public Blog(){
+    public BlogRepo(){
 
-        this.BlogId = BlogId;
-        this.Title = Title;
+        // this.BlogId = BlogId;
+        // this.Title = Title;
 
         posts.Add(new Post {
             PostId = 1,
@@ -38,7 +38,8 @@ public class Blog : IBlog {
         posts.Add(new Post {
             PostId = 2,
             Title = "My Second Post",
-            Content = "This is my second post"});
+            Content = "This is my second post"
+            });
         posts.Add(new Post {
             PostId = 3,
             Title = "My Third Post",
@@ -81,22 +82,44 @@ public class Blog : IBlog {
         });
     }
 
-    public Post read(int id){
-        return posts.First(p => p.PostId == id);
+    public void Add(Post p){
+        posts.Add(p);
     }
 
-    public IEnumerable<Post> readAll(){
-        return posts;
+    public Post Read(int id){
+        return posts.First(n => n.PostId == id);
     }
 
     public IEnumerable<Post> readLastFive(){
-        posts.Reverse();
-        List<Post> lastFivePosts = new List<Post>();
-        for (int i = 0; i < 5; i++){
-            lastFivePosts.Add(posts[i]);
-        }
+        // posts.Reverse();
+        // List<Post> lastFivePosts = new List<Post>();
+        var lastFivePosts = posts.OrderByDescending(x => x.PostId).Take(5);
+        // for (int i = 0; i < 5; i++){
+        //     lastFivePosts.Add(posts[i]);
+        // }
         return lastFivePosts;
     }
 
+
+    public void Create([FromBody]Post p){
+        posts.Add(p);
+    }
+
+    public Post Update([FromForm] Post p, int id){
+        var postToUpdate = posts.First(n => n.PostId == id);
+        if (postToUpdate != null){
+            posts.Remove(postToUpdate);
+            posts.Add(p);
+            return p;
+        }
+        return null;
+    }
+
+    public void Delete(int id){
+        var p = posts.First(n => n.PostId == id);
+        if(p != null){
+            posts.Remove(p);
+        }
+    }
 
 }

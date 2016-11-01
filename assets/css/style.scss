@@ -1,3 +1,24 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+.grid {
+    font-size: 0;
+    & > * {
+        display: inline-block;
+        font-size: medium;
+    }
+    &:after {
+        content: "";
+        display: inline-block;
+        width: 100%;
+    }
+}
+
+
+
+
+
 @define-mixin grid_r $col, $width {
         @media (min-width: $(width)px) {
                 .grid-$(col)-$(width) {
@@ -7,11 +28,22 @@
             }
     }
 }
+
 @mixin grid_r 2, 400;
 @mixin grid_r 3, 600;
 @mixin grid_r 4, 800;
 @mixin grid_r 6, 1000;
 
 body {
-    color: red;
+    background-color: cadetblue;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.post {
+    background-color: lightgray;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 1.5rem;
+    box-shadow: 0 5px .5rem rgba(0,0,0,0.5);
 }

@@ -10,8 +10,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 public class Post
 {
     public int PostId { get; set; }
-    public string title { get; set; }
-    public string content { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public Post(){
+        PostId = new Random().Next();
+    }
     
     // public Post(int PostId, string title, string content){
     //     this.PostId = PostId;

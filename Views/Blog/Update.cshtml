@@ -1,0 +1,31 @@
+@model Post
+
+<h1>Edit Post:</h1>
+<div class="post">
+<h2>@Model.Title</h2>
+<p>Post @Model.PostId</p>
+
+<p>
+    @Model.Content
+</p>
+</div>
+
+<hr/>
+<div class="post">
+<form asp-controller="Post" asp-action="Upsert">
+    <div>
+        <label asp-for="Title">Title:</label><br>
+        <input asp-for="Title"/>
+    </div>
+
+    <div>
+        <label asp-for="Content">Content:</label><br>
+        <textarea asp-for="Content"></textarea>
+    </div>
+
+    <input asp-for="PostId" type="hidden"/>
+    
+    <button type="submit">Update Post</button>
+</form>
+</div>
+

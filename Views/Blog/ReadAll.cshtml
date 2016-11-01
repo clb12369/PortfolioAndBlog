@@ -1,0 +1,8 @@
+@model BlogRepo
+
+
+<h1>@Model.Title</h1>
+
+@foreach (var post in @Model.readAll()){
+    @Html.Partial("ReadOne", post)
+}

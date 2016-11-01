@@ -1,0 +1,25 @@
+@model Post
+
+<div class="post">
+<h2><a href="blog/@(Model.PostId)">@(Model.Title)</a></h2>
+<p>Post @(Model.PostId)</p>
+
+<p>
+    @(Model.Content)
+</p>
+
+<p>
+    <form 
+        method="put"
+        action="/blog/@(Model.PostId)/edit">
+            <button type="submit">Edit Post</button>
+    </form>
+
+    <form 
+        method="post"
+        action="/blog/@(Model.PostId)/delete">
+            <button type="submit">Delete Post</button>
+    </form>
+
+</p>
+</div>
